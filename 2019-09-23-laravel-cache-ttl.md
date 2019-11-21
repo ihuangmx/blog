@@ -1,4 +1,4 @@
-# 缓存时间单位的使用
+# Laravel 缓存时间单位规范
 
 Laravel 5.8 将缓存项的时间单位从分钟调整到了秒，主要是为了遵循 `PSR-16` 的相关规范：
 
@@ -21,8 +21,8 @@ Cache::put('foo', 'bar', 30);
 在 `Laravel` 的项目中，我们`强烈推荐`使用 `Carbon` 相关运算来代表 `TTL`，能够大大提高代码的可读性
 
 ```php
-// 30 秒，可读性不强
+// 30 秒
 Cache::put('foo', 'bar', now()->addSeconds(30));
-// 一天，可读性强
+// 一天
 Cache::put('foo', 'bar', now()->addDay());
 ```
