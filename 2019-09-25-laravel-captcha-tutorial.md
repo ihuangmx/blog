@@ -1,39 +1,33 @@
 # Laravel 快速添加验证码
 
-> 注：本文使用的 Laravel 版本为 `5.8`。
+> 注：本文使用的 Laravel 版本为 `6.x`。
 
-创建应用
+## 生成注册登录
 
-```php
-$ laravel new Captcha
+Laravel 6.x 版本需要进行前端的初始化
+
+```bash
+$ composer require laravel/ui
 ```
 
-配置数据库
+生成 `bootstrap` 脚手架
 
-```toml
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=3306
-DB_DATABASE=captcha
-DB_USERNAME=root
-DB_PASSWORD=123456
+```bash
+php artisan ui bootstrap
+php artisan ui:auth bootstrap
 ```
 
-执行迁移
+编译前端资源
 
-```sh
-$ php artisan migrate
+```bash
+$ cnpm install && npm run dev
 ```
 
-使用  Laravel 自带的 `auth` 组件
-
-```sh
-$ php artisan make:auth
-```
+## 添加验证码
 
 安装扩展包
 
-```sh
+```bash
 $ composer require mews/captcha
 ```
 
@@ -41,12 +35,6 @@ $ composer require mews/captcha
 
 ```sh
 $ php artisan vendor:publish --provider='Mews\Captcha\CaptchaServiceProvider'
-```
-
-根据自己需要进行配置，本文使用默认配置，因此省略该步骤。配置后记得清空配置信息缓存。
-
-```sh
-$ php artisan config:cache
 ```
 
 `captcha` 提供了一系列辅助方法
@@ -66,9 +54,13 @@ captcha_src('flat');
 
 同时，该扩展包默认注册了供用户获取验证码的路由
 
-![-w1240](qiniu.larahacks.cn/15543463922140.jpg)
+```bash
+$ php artisan route:list | grep captcha
+# captcha/{config?}
+# captcha/api/{config?}
+```
 
-本地路由测试
+本地测试
 
 ```
 127.0.0.1:8000/captcha  // 默认使用 default 配置
@@ -76,7 +68,7 @@ captcha_src('flat');
 127.0.0.1:8000/captcha/api // 测试 API 返回
 ```
 
-测试成功后，我们来为注册视图添加验证码，可添加到密码后面
+在密码字段后面添加验证码 - URL 后面附带了随机数，防止浏览器缓存
 
 ```php
 // /resources/views/auth/register.blade.php
@@ -98,12 +90,7 @@ captcha_src('flat');
 </div>
 ```
 
-该步骤中，我们在 URL 后面附带了随机数，防止浏览器缓存。
-
-![-w740](qiniu.larahacks.cn/15553341862464.jpg)
-
-
-最后，只需要在注册控制器中添加验证即可
+最后，只需要在注册控制器中添加验证
 
 ```php
 // /app/Http/Controllers/Auth/RegisterController.php
@@ -118,3 +105,5 @@ protected function validator(array $data)
     ]);
 }
 ```
+
+
