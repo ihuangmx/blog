@@ -32,7 +32,7 @@
     * [核心:错误处理](2019-11-15-php-error.md)
     * [核心:异常处理](2019-11-22-php-exception.md)
     * [核心:重载](2019-11-20-php-overload.md)
-    * [规范:Symfony 编码规范](2019-11-06-psr-style.md)
+    * [规范:Symfony 编码规范](2019-11-06-symfony-style.md)
     * [性能优化: OPcache](2019-11-08-php-opcache.md)
     * [性能优化: php.ini](2019-11-10-php-ini.md)
 * Api
